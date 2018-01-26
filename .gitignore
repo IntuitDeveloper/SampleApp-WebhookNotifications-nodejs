@@ -1,0 +1,9 @@
+*.env
+*.pem
+npm-debug.log
+.env
+/node_modules
+/npm-debug.log
+file.csv
+.ide
+.DS_Store
