@@ -3,7 +3,8 @@ Intuit-WebhookNotifications-Demo in Javascript with Express
 
 ## Overview
 
-This is a quick OAuth2.0 incorporated demo that runs using JavaScript, Node.js and Express with the [node-quickbooks](https://github.com/mcohen01/node-quickbooks) SDK
+This is a quick OAuth2.0 incorporated demo that runs using JavaScript, Node.js and Express with the   
+[node-quickbooks](https://github.com/mcohen01/node-quickbooks) SDK
 
 ## Installation
 
@@ -26,12 +27,6 @@ Edit the `config.json` file to add your:
 * **webhooksVerifier:** copy the `show token` from the `Webhooks` tab under your `App` 
 
 
-```bash
-$ cd ringcentral-demos-oauth/javascript-express
-$ cp config-sample.env.txt .env
-$ vi .env
-```
-
 In the [Developer Portal](http://developer.intuit.com/), ensure the redirect URI in your `config.json` file has been entered in your app configuration. By default, the URL is set to the following for this demo:
 
 
@@ -40,7 +35,7 @@ Some properties of note:
 
 | Property | Description |   
 |----------|-------------|   
-| `redirectUri` | This is the OAuth 2.0 redirect URL, this will end in `/call` and be something like `http://localhost:3000/callback` or `https://755c8b38.ngrok.io/callback`. This needs to be configured in your app in the Developer Portal(https://developers.ringcentral.com) |  
+| `redirectUri` | This is the OAuth 2.0 redirect URL, this will end in `/call` and be something like `http://localhost:3000/callback` or `https://755c8b38.ngrok.io/callback`. This needs to be configured in your app in the Developer Portal(https://developer.intuit.com) |  
 | `webhookUri` | This is the webhook URL which ends in `/webhook` and can be something like `https://yourdomain.com/webhook` or `https://755c8b38.ngrok.io/hook`. |  
 
 
