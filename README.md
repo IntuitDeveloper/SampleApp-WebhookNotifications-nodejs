@@ -6,6 +6,14 @@ Intuit-WebhookNotifications-Demo in Javascript with Express
 This is a quick OAuth2.0 incorporated demo that runs using JavaScript, Node.js and Express with the   
 [node-quickbooks](https://github.com/mcohen01/node-quickbooks) SDK
 
+This sample app is meant to showcase an example of how to integrate your app with the Intuit Developer Platform. It showcases the following:
+
+* Authorize into the app via OAuth2.0 ( Ref to [OAuth2.0 for server side web-apps](https://developer.intuit.com/docs/00_quickbooks_online/2_build/10_authentication_and_authorization/10_oauth_2.0) for more information )
+* Create a sample customer 
+* Receive webhook notifications
+* Write the notifications to a CSV file 
+
+
 ## Installation
 
 ### Via Github Repo (Recommended)
@@ -76,3 +84,5 @@ https://755c8b38.ngrok.io/
 Then click the <input type="button" value="Login (OAuth2.0)"> button to authorize the demo app and view the access token.
 
 Events are logged to the Node.js console.
+
+![APP screenshots](views/app.png)
