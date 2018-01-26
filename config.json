@@ -1,8 +1,10 @@
 {
-  "clientId": "",                                                                                                       // clientId from the DeveloperPortal
-  "clientSecret": "",                                                                                                   // clientSecret from the DeveloperPortal
+  "clientId": "",
+  "clientSecret": "",
   "redirectUri": "",
   "configurationEndpoint": "https://developer.api.intuit.com/.well-known/openid_sandbox_configuration/",
+  "authorization_endpoint":"https://appcenter.intuit.com/connect/oauth2",
+  "token_endpoint":"https://oauth.platform.intuit.com/oauth2/v1/tokens/bearer",
   "api_uri": "https://sandbox-quickbooks.api.intuit.com/v3/company/",
   "scopes": {
     "sign_in_with_intuit": [
@@ -26,6 +28,6 @@
       "address"
     ]
   },
-  "webhookUri": "",                                                                                                     // webhookUri from the Developer Portal
-  "webhooksVerifier": ""                                                                                                // webhooksVerifier token from the Developer Portal
+  "webhookUri": "",
+  "webhooksVerifier": ""
 }

@@ -1,7 +1,8 @@
 require('dotenv').config();
 var https = require('https');
 var express = require('express');
-var session = require('express-session')
+var session = require('express-session');
+var request = require('request');
 var app = express();
 var config = require('./config.json');
 var path = require('path');
@@ -10,7 +11,8 @@ var QuickBooks = require('node-quickbooks');
 var queryString = require('query-string');
 var fs = require('fs');
 var json2csv = require('json2csv');
-
+var Tokens = require('csrf');
+var csrf = new Tokens();
 
 // Configure View and Handlebars
 app.use(express.static(path.join(__dirname, '')))
@@ -21,25 +23,26 @@ app.engine('handlebars', hbs.engine);
 app.set('view engine', 'handlebars');
 app.use(session({secret: 'secret', resave: 'false', saveUninitialized: 'false'}))
 
-// Create body parsers for application/json and application/x-www-form-urlencoded
+/*
+Create body parsers for application/json and application/x-www-form-urlencoded
+ */
 var bodyParser = require('body-parser')
 app.use(bodyParser.json())
 var urlencodedParser = bodyParser.urlencoded({ extended: false })
 
-
+/*
+App Variables
+ */
 var token_json,realmId,payload;
-
 var fields = ['realmId', 'name', 'id', 'operation', 'lastUpdated'];
 var newLine= "\r\n";
 
 
-app.use('/sign_in_with_intuit', require('./js/sign_in_with_intuit.js'));
 app.use(express.static('views'));
 
 app.get('/', function(req, res) {
 
     //write the headers and newline
-    console.log('New file, just writing headers');
     fields= (fields + newLine);
 
     fs.writeFile('file.csv', fields, function (err, stat) {
@@ -56,46 +59,56 @@ app.get('/', function(req, res) {
     });
 });
 
-
 app.get('/authUri', function(req,res) {
 
-    // Initialize a new version of tools
-    var tools = require('./js/tools.js');
+    /*
+    Generate csrf Anti Forgery
+     */
+    req.session.secret = csrf.secretSync();
+    var state = csrf.create(req.session.secret);
 
-    // Set the OpenID scopes
-    tools.setScopes('connect_to_quickbooks');
+    /*
+    Generate the AuthUrl
+     */
+    var redirecturl = config.authorization_endpoint +
+        '?client_id=' + config.clientId +
+        '&redirect_uri=' + encodeURIComponent(config.redirectUri) +  //Make sure this path matches entry in application dashboard
+        '&scope='+ config.scopes.connect_to_quickbooks[0]+' '+config.scopes.connect_to_quickbooks[1] +
+        '&response_type=code' +
+        '&state=' + state;
 
-    // Constructs the authorization URI.
-    var authorizeUri = tools.intuitAuth.code.getUri({
-        // Add CSRF protection
-        state: tools.generateAntiForgery(req.session)
-    });
-    console.log("The auth uri is :"+authorizeUri);
-    res.send(authorizeUri);
+    res.send(redirecturl);
+
 });
 
 app.get('/callback', function(req, res) {
 
-    var tools = require('./js/tools.js');
-
     var parsedUri = queryString.parse(req.originalUrl);
     realmId = parsedUri.realmId;
 
-    // Verify anti-forgery
-    if(!tools.verifyAntiForgery(req.session, req.query.state)) {
-        return res.send('Error - invalid anti-forgery CSRF response!')
-    }
+    var auth = (new Buffer(config.clientId + ':' + config.clientSecret).toString('base64'));
+    var postBody = {
+        url: config.token_endpoint,
+        headers: {
+            Accept: 'application/json',
+            'Content-Type': 'application/x-www-form-urlencoded',
+            Authorization: 'Basic ' + auth,
+        },
+        form: {
+            grant_type: 'authorization_code',
+            code: req.query.code,
+            redirect_uri: config.redirectUri
+        }
+    };
 
-    // Exchange auth code for access token
-    tools.intuitAuth.code.getToken(req.originalUrl).then(function (token) {
-        token_json = JSON.stringify(token.data, null,2);
-        res.send('');
-    }, function (err) {
-        console.log(err)
-        res.send(err)
-    })
+    request.post(postBody, function (err, res, data) {
+        var accessToken = JSON.parse(res.body);
+        token_json = JSON.stringify(accessToken, null,2);
+    });
+    res.send('');
 
 });
+
 
 app.post('/webhook', function(req, res) {
 
@@ -195,7 +208,6 @@ app.post('/createCustomer', urlencodedParser, function(req, res) {
     });
 
 });
-
 
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
