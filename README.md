@@ -1,5 +1,7 @@
 Intuit-WebhookNotifications-Demo in Javascript with Express
 ==========================================================
+[![Rate Me](https://img.shields.io/badge/Rate%20Me-Intuit%20Feedback-brightgreen.svg)](http://localhost:8080)
+
 
 ## Overview
 

@@ -8,3 +8,4 @@ file.csv
 .ide
 .DS_Store
 .idea/
+config.json
