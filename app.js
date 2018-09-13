@@ -73,7 +73,7 @@ app.get('/authUri', function(req,res) {
     var redirecturl = config.authorization_endpoint +
         '?client_id=' + config.clientId +
         '&redirect_uri=' + encodeURIComponent(config.redirectUri) +  //Make sure this path matches entry in application dashboard
-        '&scope='+ config.scopes.connect_to_quickbooks[0]+' '+config.scopes.connect_to_quickbooks[1] +
+        '&scope='+ config.scopes.connect_to_quickbooks[0] +
         '&response_type=code' +
         '&state=' + state;
 
@@ -211,6 +211,6 @@ app.post('/createCustomer', urlencodedParser, function(req, res) {
 
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
-app.listen(3000, function () {
+app.listen(8000, function () {
     console.log('Example app listening on port 3000!')
 })

@@ -28,6 +28,13 @@ $ npm install
 
 ## Configuration
 
+Copy the contents from `sample-config.json` to `config.json`:
+
+```bash
+$ cp sample-confog.json config.json
+
+```
+
 Edit the `config.json` file to add your:  
 
 * **clientId:** You can find your `clientId` from the `Keys` tab under your `App` listed on the developer portal
