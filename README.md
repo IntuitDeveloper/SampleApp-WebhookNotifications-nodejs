@@ -1,3 +1,6 @@
+[![Sample Banner](views/Sample.png)][ss1]
+
+
 Intuit-WebhookNotifications-Demo in Javascript with Express
 ==========================================================
 [![Rate Me](https://img.shields.io/badge/Rate%20Me-Intuit%20Feedback-brightgreen.svg)](https://13b662a8.ngrok.io)
@@ -95,3 +98,5 @@ Then click the <input type="button" value="Login (OAuth2.0)"> button to authoriz
 Events are logged to the Node.js console.
 
 ![APP screenshots](views/app.png)
+
+[ss1]: https://help.developer.intuit.com/s/samplefeedback?cid=9010&repoName=SampleApp-WebhookNotifications-nodejs
