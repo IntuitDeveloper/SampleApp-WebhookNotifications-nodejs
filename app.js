@@ -109,10 +109,18 @@ app.get('/callback', function(req, res) {
 
 });
 
+app.post('/payload',function (req,res) {
+
+
+  console.log("The Webhook notification payload is :" + JSON.stringify(req.body));
+  res.sendStatus(200);
+
+})
 
 app.post('/webhook', function(req, res) {
 
     var webhookPayload = JSON.stringify(req.body);
+    console.log('The paylopad is :' + JSON.stringify(req.body));
     var signature = req.get('intuit-signature');
 
     var fields = ['realmId', 'name', 'id', 'operation', 'lastUpdated'];
@@ -204,7 +212,7 @@ app.post('/createCustomer', urlencodedParser, function(req, res) {
     qbo.createCustomer({DisplayName: req.body.displayName}, function(err, customer) {
         if (err) console.log(err)
         else console.log("The response is :" + JSON.stringify(customer,null,2));
-        res.send(customer);
+        res.send(customer   );
     });
 
 });
@@ -212,5 +220,5 @@ app.post('/createCustomer', urlencodedParser, function(req, res) {
 
 // Start server on HTTP (will use ngrok for HTTPS forwarding)
 app.listen(8000, function () {
-    console.log('Example app listening on port 3000!')
+    console.log('Example app listening on port 8000!')
 })
