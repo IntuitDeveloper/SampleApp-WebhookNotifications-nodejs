@@ -24,7 +24,7 @@ This sample app is meant to showcase an example of how to integrate your app wit
 ### Via Github Repo (Recommended)
 
 ```bash
-$ git clone https://github.com/anilkumarbp/SampleApp-WebhookNotifications-nodejs
+$ git clone https://github.com/IntuitDeveloper/SampleApp-WebhookNotifications-nodejs
 $ cd SampleApp-WebhookNotifications-nodejs
 $ npm install
 ```
