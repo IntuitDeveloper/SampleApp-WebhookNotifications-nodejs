@@ -34,7 +34,7 @@ $ npm install
 Copy the contents from `sample-config.json` to `config.json`:
 
 ```bash
-$ cp sample-confog.json config.json
+$ cp sample-config.json config.json
 
 ```
 
